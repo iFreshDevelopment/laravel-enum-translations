@@ -43,9 +43,10 @@ return [
 
 Now to use these translations in your application by using the `EnumTranslatorFacade`:
 ```php
-use IFresh\EnumTranslations\EnumTranslatorFacade;
+use App\Enums\Cards;
+use IFresh\EnumTranslations\EnumTranslatorFacade as EnumTranslator;
 
-$translations = EnumTranslatorFacade::translate(App\Enums\Cards::class);
+$translations = EnumTranslator::translate(Cards::class);
 /*
  * [
  *   'hearts' => 'Hearts ❤️',
