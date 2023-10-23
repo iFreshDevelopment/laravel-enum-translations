@@ -5,7 +5,7 @@ namespace IFresh\EnumTranslations;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static array translate(string $enum)
+ * @method static array translate(string $enum, $value = null)
  */
 class EnumTranslatorFacade extends Facade
 {

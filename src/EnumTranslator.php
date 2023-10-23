@@ -3,8 +3,11 @@
 namespace IFresh\EnumTranslations;
 
 use BackedEnum;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use InvalidArgumentException;
+use StringBackedEnum;
 
 class EnumTranslator
 {
@@ -18,28 +21,28 @@ class EnumTranslator
      * translation
      * @param  class-string<BackedEnum>  $enum
      */
-    public function translate(string $enum): array
+    public function translate(string $enum, $value = null): array|string
     {
         $this->ensureValidEnum($enum);
 
-        $langPath = sprintf('enums.%s', strtolower(class_basename($enum)));
+        $className = class_basename($enum);
+        $langPath = sprintf('enums.%s', Str::kebab($className));
 
-        $result = [];
+        if ($value) {
+            $this->ensureValidEnumValue($enum, $value);
 
-        foreach($enum::cases() as $case) {
-            $languageKey = $langPath.'.'.$case->value;
-            $hasTranslation = $this->translator->has($languageKey);
+            $languageKey = "{$langPath}.{$value->value}";
 
-            if(! $hasTranslation) {
-                $value = $languageKey;
-            } else {
-                $value = $this->translator->get($languageKey);
-            }
+            return $this->translator->get($languageKey);
+        }
 
-            $result[$case->value] = $value;
-        };
-
-        return $result;
+        return Arr::mapWithKeys(
+            array: $enum::cases(),
+            callback: function ($case) use ($langPath) {
+                return [
+                    $case->value => $this->translator->get("{$langPath}.{$case->value}")
+                ];
+            });
     }
 
     /**
@@ -55,6 +58,13 @@ class EnumTranslator
 
         if(!method_exists($enum, 'cases')) {
             throw new InvalidArgumentException('Method `cases` was not found on "'.$enum.'" perhaps not a backed enum.');
+        }
+    }
+
+    protected function ensureValidEnumValue(string $enum, $value): void
+    {
+        if (!$value instanceof $enum) {
+            throw new InvalidArgumentException("{$value} is not an instance of {$enum}.");
         }
     }
 }
