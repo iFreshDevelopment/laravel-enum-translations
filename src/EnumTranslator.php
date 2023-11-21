@@ -21,20 +21,12 @@ class EnumTranslator
      * translation
      * @param  class-string<BackedEnum>  $enum
      */
-    public function translate(string $enum, $value = null): array|string
+    public function translate(string $enum): array
     {
         $this->ensureValidEnum($enum);
 
         $className = class_basename($enum);
         $langPath = sprintf('enums.%s', Str::kebab($className));
-
-        if ($value) {
-            $this->ensureValidEnumValue($enum, $value);
-
-            $languageKey = "{$langPath}.{$value->value}";
-
-            return $this->translator->get($languageKey);
-        }
 
         return Arr::mapWithKeys(
             array: $enum::cases(),
@@ -43,6 +35,29 @@ class EnumTranslator
                     $case->value => $this->translator->get("{$langPath}.{$case->value}")
                 ];
             });
+    }
+
+    /**
+     * Finds translation for backing value or returns empty string
+     *
+     * @param class-string<BackedEnum>  $enum
+     */
+    public function getTranslatedValue(string $enum, $value = null): string {
+        $this->ensureValidEnum($enum);
+
+        if (!$value) {
+            return '';
+        }
+
+        $className = class_basename($enum);
+        $langPath = sprintf('enums.%s', Str::kebab($className));
+
+        $this->ensureValidEnumValue($enum, $value);
+
+        $languageKey = "{$langPath}.{$value->value}";
+
+        return $this->translator->get($languageKey);
+
     }
 
     /**

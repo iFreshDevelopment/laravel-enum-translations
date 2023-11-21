@@ -55,6 +55,13 @@ $translations = EnumTranslator::translate(Cards::class);
  *   'spades' => 'Spades ♠️',
  * ]
  */
+
+$translatedValue = EnumTranslator::getTranslatedValue(Cards::class, Cards::Diamonds);
+// returns 'Diamonds 💎' string
+//
+$translatedValue = EnumTranslator::getTranslatedValue(Cards::class, null);
+// returns ''  empty string
+
 ```
 
 ## Contributing
