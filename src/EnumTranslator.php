@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator;
 use InvalidArgumentException;
-use StringBackedEnum;
 
 class EnumTranslator
 {
@@ -40,19 +39,22 @@ class EnumTranslator
     /**
      * Finds translation for backing value or returns empty string
      *
-     * @param class-string<BackedEnum>  $enum
+     * @param  class-string<BackedEnum>  $enum
+     * @param  BackedEnum|null  $value
+     * @return string
      */
-    public function getTranslatedValue(string $enum, $value = null): string {
+    public function translateValue(string $enum, ?BackedEnum $value): string
+    {
         $this->ensureValidEnum($enum);
 
-        if (!$value) {
+        if (is_null($value)) {
             return '';
         }
 
+        $this->ensureValidEnumValue($enum, $value);
+
         $className = class_basename($enum);
         $langPath = sprintf('enums.%s', Str::kebab($className));
-
-        $this->ensureValidEnumValue($enum, $value);
 
         $languageKey = "{$langPath}.{$value->value}";
 

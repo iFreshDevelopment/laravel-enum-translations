@@ -42,6 +42,9 @@ return [
 ```
 
 Now to use these translations in your application by using the `EnumTranslatorFacade`:
+
+If you simply want to get the list of all the translations for a single Enum (for instance when filling a dropdown) you
+can use the `translate` method available on the Facade:
 ```php
 use App\Enums\Cards;
 use IFresh\EnumTranslations\EnumTranslatorFacade as EnumTranslator;
@@ -55,13 +58,15 @@ $translations = EnumTranslator::translate(Cards::class);
  *   'spades' => 'Spades ♠️',
  * ]
  */
+```
+It is also possible to get the translated value for a single enum value, to do this you can use the `translateValue` method instead:
+```php
+EnumTranslator::translateValue(Cards::class, Cards::Hearts); // 'Hearts ❤️'
+```
 
-$translatedValue = EnumTranslator::getTranslatedValue(Cards::class, Cards::Diamonds);
-// returns 'Diamonds 💎' string
-//
-$translatedValue = EnumTranslator::getTranslatedValue(Cards::class, null);
-// returns ''  empty string
-
+When you pass `null` as the selected enum value, an empty string is returned:
+```php
+EnumTranslator::translateValue(Cards::class, null); // '' 
 ```
 
 ## Contributing
