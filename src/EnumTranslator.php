@@ -59,7 +59,6 @@ class EnumTranslator
         $languageKey = "{$langPath}.{$value->value}";
 
         return $this->translator->get($languageKey);
-
     }
 
     /**
