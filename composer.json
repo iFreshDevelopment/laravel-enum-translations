@@ -3,16 +3,14 @@
     "type": "library",
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.0",
-        "illuminate/support": "^10.0",
-        "illuminate/translation": "^10.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.0"
+        "illuminate/contracts": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/translation": "^10.0|^11.0"
     },
     "autoload": {
         "psr-4": {
-            "IFresh\\EnumTranslations\\": "src/"
+            "IFresh\\EnumTranslations\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "authors": [
@@ -30,6 +28,15 @@
             "aliases": {
                 "EnumTranslator": "IFresh\\EnumTranslations\\EnumTranslatorFacade"
             }
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.30",
+        "mockery/mockery": "^1.6"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }

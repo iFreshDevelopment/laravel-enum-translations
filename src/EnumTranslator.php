@@ -3,9 +3,9 @@
 namespace IFresh\EnumTranslations;
 
 use BackedEnum;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Translation\Translator;
 use InvalidArgumentException;
 
 class EnumTranslator
