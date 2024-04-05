@@ -1,4 +1,6 @@
 {
+    "version": "1.0.2",
+    "license": "MIT",
     "name": "ifresh/laravel-enum-translations",
     "type": "library",
     "require": {
