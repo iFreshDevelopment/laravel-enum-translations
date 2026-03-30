@@ -1,5 +1,5 @@
 {
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": "MIT",
     "name": "ifresh/laravel-enum-translations",
     "type": "library",
@@ -7,7 +7,7 @@
         "php": "^8.1",
         "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0",
         "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
-        "illuminate/translation": "^10.0|^11.0|^12.|^13.00"
+        "illuminate/translation": "^10.0|^11.0|^12.0|^13.0"
     },
     "autoload": {
         "psr-4": {
